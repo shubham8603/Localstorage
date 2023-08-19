@@ -43,9 +43,12 @@
             const name= event.target.username.value;
             const email= event.target.email.value;
             const number= event.target.number.value;
-            localStorage.setItem('name',name);
-            localStorage.setItem('email',email);
-            localStorage.setItem('number',number);
+            
+            const userId = Date.now();
+            
+            localStorage.setItem(`name_${userId}`,name);
+            localStorage.setItem(`email_${userId}`,email);
+            localStorage.setItem(`number_${userId}`,number);
          }
     </script>
 </body>
