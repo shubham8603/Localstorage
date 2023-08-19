@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
   <title>appointmentapp</title>
+
 </head>
 <body style="background-color: greenyellow;">
     
@@ -16,7 +17,7 @@
         <label>fullname</label>
        </div>
        <div>
-        <input type="text" name="username" style="background-color: pink;" required>
+        <input type="text" id="name" name="username" style="background-color: pink;" required>
         
     </div>
     
@@ -30,26 +31,55 @@
         <label>phone number</label>
     </div>
         <div>
-        <input type="number"  name="number" style="background-color: pink;" required>
+        <input type="number" name="number" style="background-color: pink;" required>
         </div>
     <br>
-        <input type="submit" id="submit" style="background-color: blue;">
+        <input type="submit" style="background-color: blue;">
     
     </form>
+    <section id="userData" style="background-color: rgba(42, 151, 165, 0.315);">
+        <h2>User Data</h2>
+        <ul id="userList"></ul>
+    </section>
+    
 
     <script>
+       
+        // Create an object to store user data
+
+        const allUserData = {};
+
         function saveToLocalStorage(event){
             event.preventDefault();
-            const name= event.target.username.value;
-            const email= event.target.email.value;
-            const number= event.target.number.value;
-            
+            const name = event.target.username.value;
+            const email = event.target.email.value;
+            const number = event.target.number.value;
+
+         
+            // Set unique user id for every user
             const userId = Date.now();
-            
-            localStorage.setItem(`name_${userId}`,name);
-            localStorage.setItem(`email_${userId}`,email);
-            localStorage.setItem(`number_${userId}`,number);
-         }
+
+            // Create user object
+            const user = {
+                name: name,
+                email: email,
+                number: number
+            };
+
+            // Store user object as a JSON string in localStorage
+            localStorage.setItem(`user_${userId}`, JSON.stringify(user));
+
+            // Display user data as list items
+            const userList = document.getElementById("userList");
+            const listItem = document.createElement("li");
+            listItem.textContent = `Name: ${user.name}, Email: ${user.email}, Number: ${user.number}`;
+            userList.appendChild(listItem);
+
+            // Clear form inputs
+            event.target.username.value = "";
+            event.target.email.value = "";
+            event.target.number.value = "";
+        }
     </script>
 </body>
 
