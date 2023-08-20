@@ -49,7 +49,10 @@
     
 
     <script>
-       
+               // Create an object to store user data
+               const allUserData = {};
+
+
        //function to save users in local storages
 
         function saveToLocalStorage(event){
@@ -72,11 +75,7 @@
             // Store user object as a JSON string in localStorage
             localStorage.setItem(`user_${userId}`, JSON.stringify(user));
 
-            /*// Display user data as list items
-            const userList = document.getElementById("userList");
-            const listItem = document.createElement("li");
-            listItem.textContent = `Name: ${user.name}, Email: ${user.email}, Number: ${user.number}`;
-            userList.appendChild(listItem);*/
+          
 
             // Display user data as list items with a delete button
             const userList = document.getElementById("userList");
@@ -92,8 +91,23 @@
                 userList.removeChild(listItem);
                 localStorage.removeItem(`user_${userId}`);
             };
-            listItem.appendChild(deleteBtn);
+             // Create edit button
+             const editBtn = document.createElement('button');
+            editBtn.textContent = 'Edit';
+            editBtn.onclick = function() {
+                // Update the input fields with the user's data for editing
+                event.target.username.value = user.name;
+                event.target.email.value = user.email;
+                event.target.number.value = user.number;
 
+                // Remove old data from localStorage using the user's unique identifier
+                localStorage.removeItem(`user_${userId}`);
+                userList.removeChild(listItem);
+            };
+
+
+            listItem.appendChild(deleteBtn);
+             listItem.appendChild(editBtn);
             userList.appendChild(listItem);
             
 
